@@ -1,0 +1,36 @@
+====================================================
+ __________         _____________________ ________
+ \____    /         \______   \______   \/  _____/
+   /     /   ______  |       _/|     ___/   \  ___
+  /     /_  /_____/  |    |   \|    |   \    \_\  \
+ /_______ \          |____|_  /|____|    \______  /
+         \/                 \/                  \/
+====================================================
+
+============================================================
+||               Welcome to the help window               ||
+============================================================
+||                        Commands                        ||
+||--------------------------------------------------------||
+||  Help               - opens the help window            ||
+||  Move + (n,w,s,e)   - moves player in target direction ||
+||  Location           - displays location info           ||
+||  Stats              - displays player stats            ||
+||  Map                - displays map                     ||
+||  Check + (building) - checks the target building       ||
+||  Quest              - displays quests                  ||
+||  Time               - displays the current time        ||
+||                                                        ||
+||  Exit               - exits the game                   ||
+============================================================
+
+==============================================================
+||                      Shoot command                       ||
+==============================================================
+||                         Commands                         ||
+||--------------------------------------------------------  ||
+||  Move + (left, right)  - moves player in target direction||
+||  Stats                 - displays player and enemy stats ||
+||  Shoot + weapon        - shoot desired gun at enemy      ||
+||  Cover                 - increase dodge chance           ||
+||                                                          ||

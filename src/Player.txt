@@ -1,0 +1,22 @@
+       =====================================
+       =   Welcome to character creation!  =
+       =====================================
+Here you will be able to create yourself Or the character of
+your dreams! ...Not really, the character you create
+will be mostly random and not very strong. But things that you
+find on your journey will help increase your stats and help you
+survive longer but not forever...
+     !!THERE IS NO SURVIVING THE APOCALYPSE!!
+
+You will now input som less important things about your character
+These stats might be used to shape dialogue but have NO effect on combat
+What is your characters:
+
+Now we are getting into the more interesting stats
+(5) different points will be rolled for you.
+Choose what stats you want each point to go to
+If you want a rundown of what the stats do write "help"
+To skip directly to character creation just press enter
+
+Now that you know what your characters stats and measurements are
+it's time to give it a name

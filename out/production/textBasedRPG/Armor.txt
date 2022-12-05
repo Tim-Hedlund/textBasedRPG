@@ -1,0 +1,14 @@
+Name, spawnLocationTypes, lootTier, rarity, armorHealth, armorSlot
+
+Civilian stab vest, civil, 1, 0.15, 15, 0
+Police stab vest, civil, 2, 0.15, 35, 0
+Press vest, military, 1, 0.2, 65, 0
+Ballistic vest, military, 2, 0.1, 100, 0
+Plate carrier vest, military, 3, 0.1, 175, 0
+Alien body armor, military, 4, 0.1, 350, 0
+Biking helmet, civil, 1, 0.15, 10, 1
+Motorcycle helmet, civil, 2, 0.15, 25, 1
+Tanker helmet, military, 1, 0.2, 50, 1
+Ballistic helmet, military, 2, 0.1, 75, 1
+Assault helmet, military, 3, 0.1, 125, 1
+Alien helmet, military, 4, 0.1, 250, 1
