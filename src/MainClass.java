@@ -392,9 +392,43 @@ public class MainClass {
     private static void lootCheck(Location currentLocation, int playerBuildingIndex) {
         String nonSpecialLootTypes = "civil, military, hunting";
 
-        if (nonSpecialLootTypes.contains(currentLocation.buildings[playerBuildingIndex].lootType)){
-            System.out.println("your mom");
+
+        if (currentLocation.buildings.length != 0) {
+            boolean hasNpc = false;
+            for (Npc npc: currentLocation.npcs) {
+                if (npc.buildingIndex == playerBuildingIndex && !npc.alive && !currentLocation.buildings[playerBuildingIndex].looted) {
+                    if (nonSpecialLootTypes.contains(currentLocation.buildings[playerBuildingIndex].lootType)){
+                        getLoot(currentLocation, playerBuildingIndex, 1);
+                        hasNpc = true;
+                        currentLocation.buildings[playerBuildingIndex].looted = true;
+                        break;
+                    }
+                }
+            }
+            if (!hasNpc && !currentLocation.buildings[playerBuildingIndex].looted) {
+                getLoot(currentLocation, playerBuildingIndex, 5); //3x lower chance if there isn't a corpse on looted index
+                currentLocation.buildings[playerBuildingIndex].looted = true;
+            }
         }
+    }
+
+    private static void getLoot(Location currentLocation, int lootBuildingIndex, int rngModifier) {
+        System.out.println("IM ALIVE");
+        ArrayList<Weapon> weaponOptions = new ArrayList<>();
+
+        for(Weapon weapon: weapons) {
+            if ((weapon.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier) && (weapon.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType))) {
+                weaponOptions.add(weapon);
+            }
+        }
+
+        weaponOptions.removeIf(weapon -> weapon.lootRarity < Math.random()*rngModifier);
+
+        for(Weapon weapon: weaponOptions) {
+            System.out.print(weapon.name);
+            System.out.println(" " + weapon.lootTier + " " + weapon.lootType);
+        }
+
     }
 
     public static void endGame(int endingType) throws FileNotFoundException {

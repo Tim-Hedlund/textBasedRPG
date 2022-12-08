@@ -12,7 +12,6 @@ public class Npc {
     int shortRangeAim;
     int maxHealth;
     int health;
-    boolean dropsOn;
     Weapon weapon;
     Armor[] armor;
     int targetLocation = -1;

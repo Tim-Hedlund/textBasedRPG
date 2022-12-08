@@ -43,7 +43,7 @@ public class Weapon {
         plusLocation.add(lootTypes.length());
 
         for(int i = 0; i < plusLocation.size()-1; i++) {
-            this.lootType.add(lootTypes.substring(plusLocation.get(i), plusLocation.get(i+1)));
+            this.lootType.add(lootTypes.substring(plusLocation.get(i), plusLocation.get(i+1)).trim());
         }
 
         this.lootTier = Integer.parseInt(currentLine.substring(commaLocation.get(2)+1, commaLocation.get(3)).trim());

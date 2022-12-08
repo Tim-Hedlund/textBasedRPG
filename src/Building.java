@@ -6,6 +6,7 @@ public class Building {
     String lootType;
     int lootTier;
     int lootAmount;
+    boolean looted = false;
     public Building(String name, String lootType, int lootTier, int lootAmount) {
         this.name = name;
         this.lootType = lootType;
