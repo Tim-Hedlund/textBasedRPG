@@ -30,8 +30,8 @@ public class Player {
     static int weight;
     //less important stats
 
-    static int playerX = 6;
-    static int playerY = 6;
+    static int playerX = 5;
+    static int playerY = 0;
     //current location, max y = 7, max x = 6, location 6 6 is Solnechny
 
     static int playerBuildingIndex = 2;
@@ -77,13 +77,9 @@ public class Player {
             } else {
                 System.out.println("There are no more buildings in this direction");
             }
-            System.out.println(playerBuildingIndex);
         } else {
             System.out.println("There are no buildings at this location");
         }
-
-
-
     }
 
     static void blank(int repetitions){
@@ -321,7 +317,7 @@ public class Player {
         }
 
         if(!loop) { //if the loop was broken after setting loop to false, (if weapon is got)
-            double hitChance = currentWeapon.accuracy * Math.abs(targetBuildingIndex-Player.playerBuildingIndex);
+            double hitChance = Math.pow(currentWeapon.accuracy, 0.5 * Math.abs(targetBuildingIndex-Player.playerBuildingIndex));
             if(hitChance == 0) {
                 hitChance = currentWeapon.accuracy;
             }
@@ -346,13 +342,13 @@ public class Player {
     public static boolean takeDamage(int targetBuildingIndex, Weapon npcWeapon, int npcIndex) throws FileNotFoundException {
 
         if (targetBuildingIndex == Player.playerBuildingIndex) {
-            double hitChance = npcWeapon.accuracy * Math.abs(Player.playerBuildingIndex-npcIndex);
-            if(hitChance == 0) {
+            double hitChance = Math.pow(npcWeapon.accuracy, 0.5 * Math.abs(Player.playerBuildingIndex-npcIndex));
+            if(hitChance == 0 || npcWeapon.range == 0) {
                 hitChance = npcWeapon.accuracy;
             }
             //works up to this 100%
 
-            int hitLocation = 0;
+            int hitLocation;
             ArrayList<Integer> hitLocations = new ArrayList<>();
             double damageMultiplier;
 
@@ -390,7 +386,7 @@ public class Player {
                     }
                     System.out.println("You got hit: " + damage);
                     System.out.println();
-                    System.out.println("[" + currentHealth + "/" +  health + "]");
+                    System.out.println("[" + currentHealth + "/" +  maxHealth + "]");
                     healthCheck();
                 }
             }
@@ -402,6 +398,12 @@ public class Player {
     private static void healthCheck() throws FileNotFoundException {
         if (currentHealth < 0) {
             MainClass.endGame(1);
+        } else {
+            currentHealth += maxHealth/10;
+        }
+
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
         }
     }
 }

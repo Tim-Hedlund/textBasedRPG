@@ -288,10 +288,6 @@ public class MainClass {
         return weaponCandidates.get((int)Math.floor(Math.random()*weaponCandidates.size()));
     }
 
-    static Weapon getZombieWeapon(int difficulty) {
-        return new Weapon("Zombie hands", new ArrayList<>(), 0, 0, difficulty + 15, 1, 0, 0.7, 0, 0);
-    }
-
     public static Armor[] getRandomArmor(int difficulty) {
 
         ArrayList<Armor> armorCandidates = new ArrayList<>();
@@ -599,24 +595,17 @@ public class MainClass {
         while (true) {  //game loop
 
             if (usedInput) { //decides if Npcs should move or not
-                System.out.println("Ai takes turn");
                 currentLocation.moveNpcs(currentLocation);
                 currentLocation.showBuildings();
                 Player.lowerWeaponCD();
-
                 usedInput = false;
             }
-
-            for(Npc npc: currentLocation.npcs) {
-                System.out.println(npc.buildingIndex+ " has " + npc.weapon.name + " and " + npc.armor.length);
-
-            }
-
-            System.out.println();  //Takes input for each iteration of the game loop
+            System.out.println();   //Takes input for each iteration of the game loop
             System.out.print("Input: ");
             generalInput = keyboard.nextLine().toLowerCase();
             blank(100);
             System.out.println("Input: [" + generalInput + "]");
+            blank(2);
 
 
 
@@ -658,9 +647,7 @@ public class MainClass {
 
             } else if (generalInput.contains("move")) {
                 Player.move(generalInput, currentLocation);
-                System.out.println(Player.playerBuildingIndex);
                 usedInput = true;
-                //currentLocation.checkBuilding(currentLocation.buildings[Player.playerBuildingIndex], currentLocation);
 
             } else if (generalInput.equals("check")) {
                 System.out.println("check");
@@ -681,6 +668,4 @@ public class MainClass {
             }
         }
     }
-
-
 }

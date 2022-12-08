@@ -1,7 +1,5 @@
-import com.sun.tools.javac.Main;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -16,7 +14,7 @@ public class Npc {
     int health;
     boolean dropsOn;
     Weapon weapon;
-    Armor[] armor = new Armor[3];
+    Armor[] armor;
     int targetLocation = -1;
     boolean aggressive = false;
     boolean alive = true;
@@ -63,7 +61,7 @@ public class Npc {
         if (Math.round(Math.log10((11-Player.stealth)*4)+1) >= Math.abs(Player.playerBuildingIndex-this.buildingIndex)) { //if npc sees player
             this.targetLocation = Player.playerBuildingIndex;
             this.aggressive = true;
-        } else if (targetLocation < 0 || targetLocation > currentLocation.buildings.length-1) { //if target location is outside of town
+        } else if (this.targetLocation < 0 || this.targetLocation > currentLocation.buildings.length-1) { //if target location is outside of town
             this.targetLocation = (int)Math.floor(Math.random()*currentLocation.buildings.length-1);
             this.aggressive = false;
         }
@@ -123,7 +121,7 @@ public class Npc {
 
     public void takeDamage(Weapon currentWeapon, double hitChance) throws FileNotFoundException {
 
-        int hitLocation = 0;
+        int hitLocation;
         ArrayList<Integer> hitLocations = new ArrayList<>();
         double damageMultiplier;
 
