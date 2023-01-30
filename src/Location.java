@@ -71,27 +71,32 @@ public class Location {
                 }
 
                 String enemyName;
-                if(NPCNum == 0) {
-                    MainClass.writeCharacter(this.buildings[i].name.length(), " ", false);
-                } else {
-                    if(NPCNum == 1) {
-                        if (aliveTest == 1) {
-                            enemyName = "Enemy";
-                        } else {
-                            enemyName = "Corpse";
-                        }
+                if(Player.sight >= Math.abs(Player.playerBuildingIndex-i)) {
+                    if (NPCNum == 0) {
+                        MainClass.writeCharacter(this.buildings[i].name.length(), " ", false);
                     } else {
-                        if(NPCNum == aliveTest) {
-                            enemyName = NPCNum + "X Enemy";
-                        } else if (aliveTest == 0) {
-                            enemyName = NPCNum + "X corpse";
+                        if (NPCNum == 1) {
+                            if (aliveTest == 1) {
+                                enemyName = "Enemy";
+                            } else {
+                                enemyName = "Corpse";
+                            }
                         } else {
-                            enemyName = NPCNum + "X mixed";
+                            if (NPCNum == aliveTest) {
+                                enemyName = NPCNum + "X Enemy";
+                            } else if (aliveTest == 0) {
+                                enemyName = NPCNum + "X corpse";
+                            } else {
+                                enemyName = NPCNum + "X mixed";
+                            }
                         }
-                    }
-                    printCount = this.buildings[i].name.length() - enemyName.length();
+                        printCount = this.buildings[i].name.length() - enemyName.length();
 
-                    locationPrintPiece(printCount, " ", enemyName);
+                        locationPrintPiece(printCount, " ", enemyName);
+                    }
+                } else {
+                    printCount = this.buildings[i].name.length();
+                    locationPrintPiece(printCount, "#", "");
                 }
                 System.out.print(" || ");
             }
@@ -108,7 +113,6 @@ public class Location {
             printCount = 0;
         }
 
-
         MainClass.writeCharacter(printCount/2, printChar, false);
         System.out.print(printString);
         MainClass.writeCharacter(printCount/2, printChar, false);
@@ -124,10 +128,10 @@ public class Location {
             }
         }
     }
-    public void takeDamage(int targetBuildingIndex, Weapon currentWeapon, double hitChance) throws FileNotFoundException {
+    public void takeDamage(int targetBuildingIndex, Weapon currentWeapon, double hitChance, double damageMultiplier) throws FileNotFoundException {
         for (Npc npc: this.npcs) {
             if (targetBuildingIndex == npc.buildingIndex) {
-                npc.takeDamage(currentWeapon, hitChance);
+                npc.takeDamage(currentWeapon, hitChance, damageMultiplier);
                 break;
             }
         }

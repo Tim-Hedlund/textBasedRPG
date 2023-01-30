@@ -75,7 +75,7 @@ public class Npc {
 
             } else if (Math.abs(distanceToTarget) < this.weapon.range) { // if player is too close to npc
                 if ((int)Math.floor(Math.random()*2) == 0) { //1/2 chance of shooting or running away from player
-                    if (!this.shoot(this.targetLocation)) { //If i t shoots at nothing it is no longer aggressive
+                    if (!this.shoot(this.targetLocation)) { //If it shoots at nothing it is no longer aggressive
                         aggressive = false;
                     }
 
@@ -92,8 +92,6 @@ public class Npc {
         } else {
             this.move(true, distanceToTarget);
         }
-        System.out.println("aggressive:" + this.aggressive);
-
     }
     private void move(boolean towardsTarget, int distanceToTarget) {
         System.out.println(this.buildingIndex + " moves");
@@ -118,7 +116,7 @@ public class Npc {
         return Player.takeDamage(targetIndex, this.weapon, this.buildingIndex);
     }
 
-    public void takeDamage(Weapon currentWeapon, double hitChance) throws FileNotFoundException {
+    public void takeDamage(Weapon currentWeapon, double hitChance, double meleeDamageMultiplier) throws FileNotFoundException {
 
         int hitLocation;
         ArrayList<Integer> hitLocations = new ArrayList<>();
@@ -151,6 +149,10 @@ public class Npc {
                     damage = ((damage + (firstDamage/3)) * damageMultiplier);
                 } else {
                     damage *= damageMultiplier;
+                }
+
+                if (currentWeapon.range == 0) {
+                    damage *= meleeDamageMultiplier;
                 }
 
                 if (damage > 0) {

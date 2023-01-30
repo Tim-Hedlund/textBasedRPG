@@ -15,6 +15,8 @@ public class Player {
     static String name;
     //name
 
+    static boolean hasKey = false;
+
     static int strength;
     static int stealth;
     static int aim;
@@ -30,8 +32,8 @@ public class Player {
     static int weight;
     //less important stats
 
-    static int playerX = 5;
-    static int playerY = 0;
+    static int playerX = 6;
+    static int playerY = 6;
     //current location, max y = 7, max x = 6, location 6 6 is Solnechny
 
     static int playerBuildingIndex = 2;
@@ -316,12 +318,18 @@ public class Player {
             }
         }
 
+        double damageMultiplier = 1;
         if(!loop) { //if the loop was broken after setting loop to false, (if weapon is got)
-            double hitChance = Math.pow(currentWeapon.accuracy, 0.5 * Math.abs(targetBuildingIndex-Player.playerBuildingIndex));
+            double hitChance = ((Math.pow(currentWeapon.accuracy, 0.5 * Math.abs(targetBuildingIndex-Player.playerBuildingIndex)))*(0.5+(float)aim/10));
+            System.out.println(hitChance);
             if(hitChance == 0) {
+                if (currentWeapon.range == 0) {
+                    damageMultiplier = (0.7+(double)Player.strength/10);
+                    System.out.println(damageMultiplier);
+                }
                 hitChance = currentWeapon.accuracy;
             }
-            currentLocation.takeDamage(targetBuildingIndex, currentWeapon, hitChance);
+            currentLocation.takeDamage(targetBuildingIndex, currentWeapon, hitChance, damageMultiplier);
             currentWeapon.setWeaponCD();
         }
         return !loop;
@@ -346,10 +354,8 @@ public class Player {
             if(hitChance == 0 || npcWeapon.range == 0) {
                 hitChance = npcWeapon.accuracy;
             }
-            //works up to this 100%
 
             int hitLocation;
-            ArrayList<Integer> hitLocations = new ArrayList<>();
             double damageMultiplier;
 
             for(int i = 0; i < npcWeapon.rpm; i++) {
@@ -359,20 +365,17 @@ public class Player {
                     if (randNum == 0) { //headshot
                         hitLocation = 1;
                         damageMultiplier = 2.5;
-                        hitLocations.add(0);
                     } else if (randNum == 1) { //legshot
                         hitLocation = 2;
                         damageMultiplier = 0.25;
-                        hitLocations.add(2);
                     } else { //body shot
                         hitLocation = 0;
-                        hitLocations.add(1);
                         damageMultiplier = 1;
                     }
 
                     if (currentArmor[hitLocation] != null) {
                         double firstDamage = damage;
-                        damage = (damage/3*2 - (armors.get(hitLocation).armorHealth * (1 - npcWeapon.armorPen)));
+                        damage = (damage/3*2 - (currentArmor[hitLocation].armorHealth * (1 - npcWeapon.armorPen)));
                         if(damage < 0) {
                             damage = 0;
                         }
@@ -405,5 +408,51 @@ public class Player {
         if (currentHealth > maxHealth) {
             currentHealth = maxHealth;
         }
+    }
+
+    public static void invCheck() throws FileNotFoundException {
+        File artfile = new File("src\\Art.txt");
+        if (currentArmor[1] != null) {
+            MainClass.printFromTxt(artfile, 3, false);
+        } else {
+            MainClass.printFromTxt(artfile, 4, false);
+        }
+        if (currentArmor[0] != null) {
+            MainClass.printFromTxt(artfile, 5, false);
+        } else {
+            MainClass.printFromTxt(artfile, 6, false);
+        }
+        MainClass.printFromTxt(artfile, 7, false);
+        blank(2);
+
+        System.out.println("--= inventory =--");
+        System.out.println();
+        System.out.println("armor:");
+        for (Armor armor: armors) {
+            System.out.println(armor.name + " -- health: " +  armor.armorHealth);
+        }
+        System.out.println();
+        System.out.println("weapons:");
+        for (Weapon weapon: weapons) {
+            System.out.println(weapon.name + " -- damage: " +  weapon.damage + ", rpm: " + weapon.rpm + ", cd: " + weapon.currentCD);
+        }
+        blank(2);
+    }
+
+    public static void equip(String generalInput) {
+
+        Armor targetArmor = null;
+        for (Armor armor: armors) {
+            if (generalInput.contains(armor.name.toLowerCase())) {
+                targetArmor = armor;
+            }
+        }
+        if (targetArmor == null) {
+            System.out.println("You dont have an armor named " + generalInput.substring(5).trim());
+        } else {
+            currentArmor[targetArmor.armorSlot] = targetArmor;
+            System.out.println("You equipped " + targetArmor.name);
+        }
+        blank(2);
     }
 }

@@ -1,9 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
+
 public class MainClass {
     public static Scanner keyboard = new Scanner(System.in);
     public static ArrayList<Quest> inactiveQuests = new ArrayList<>();
@@ -398,7 +396,7 @@ public class MainClass {
             for (Npc npc: currentLocation.npcs) {
                 if (npc.buildingIndex == playerBuildingIndex && !npc.alive && !currentLocation.buildings[playerBuildingIndex].looted) {
                     if (nonSpecialLootTypes.contains(currentLocation.buildings[playerBuildingIndex].lootType)){
-                        getLoot(currentLocation, playerBuildingIndex, 1);
+                        getLoot(currentLocation, playerBuildingIndex, 1, true);
                         hasNpc = true;
                         currentLocation.buildings[playerBuildingIndex].looted = true;
                         break;
@@ -406,29 +404,158 @@ public class MainClass {
                 }
             }
             if (!hasNpc && !currentLocation.buildings[playerBuildingIndex].looted) {
-                getLoot(currentLocation, playerBuildingIndex, 5); //3x lower chance if there isn't a corpse on looted index
+                getLoot(currentLocation, playerBuildingIndex, 1.5, false); //3x lower chance if there isn't a corpse on looted index
                 currentLocation.buildings[playerBuildingIndex].looted = true;
             }
         }
     }
 
-    private static void getLoot(Location currentLocation, int lootBuildingIndex, int rngModifier) {
+    private static void getLoot(Location currentLocation, int lootBuildingIndex, double rngModifier, boolean fromPlayer) {
         System.out.println("IM ALIVE");
         ArrayList<Weapon> weaponOptions = new ArrayList<>();
+        ArrayList<Armor> armorOptions = new ArrayList<>();
+        System.out.println(fromPlayer);
 
-        for(Weapon weapon: weapons) {
-            if ((weapon.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier) && (weapon.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType))) {
-                weaponOptions.add(weapon);
+        if (fromPlayer) {
+            for(Weapon weapon: weapons) {
+                if ((weapon.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier)) { // && (weapon.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType)
+                    weaponOptions.add(weapon);
+                }
+            }
+            for(Armor armor: armor) {
+                if ((armor.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier)) { // && (weapon.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType)
+                    armorOptions.add(armor);
+                }
+            }
+        } else {
+            if (!Objects.equals(currentLocation.buildings[Player.playerBuildingIndex].lootType, "civil")) {
+                for(Weapon weapon: weapons) {
+                    if ((weapon.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier) && (weapon.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType))) { //
+                        weaponOptions.add(weapon);
+                    }
+                }
+                for(Armor armor: armor) {
+                    if ((armor.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier) && (armor.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType))) { //
+                        armorOptions.add(armor);
+                    }
+                }
+
             }
         }
 
-        weaponOptions.removeIf(weapon -> weapon.lootRarity < Math.random()*rngModifier);
-
-        for(Weapon weapon: weaponOptions) {
-            System.out.print(weapon.name);
-            System.out.println(" " + weapon.lootTier + " " + weapon.lootType);
+        Collections.shuffle(weaponOptions);
+        for (int i = 0; i < weaponOptions.size(); i++) {
+            if (weaponOptions.size() >= 2) {
+                if (weaponOptions.get(i).lootRarity < Math.random() * rngModifier) {
+                    weaponOptions.remove(weaponOptions.get(i));
+                }
+            } else {
+                break;
+            }
         }
 
+        Collections.shuffle(armorOptions);
+        for (int i = 0; i < armorOptions.size(); i++) {
+            if (armorOptions.size() > 1) {
+                if (armorOptions.get(i).lootRarity < Math.random() * rngModifier) {
+                    armorOptions.remove(armorOptions.get(i));
+                }
+            } else {
+                break;
+            }
+        }
+
+        //weaponOptions.removeIf(weapon -> weapon.lootRarity < Math.random() * rngModifier);
+        //armorOptions.removeIf(armor -> armor.lootRarity < Math.random() * rngModifier);
+
+        Weapon weaponChoice = null;
+        Armor armorChoice = null;
+
+        System.out.println();
+        System.out.println();
+
+        //generates 1 weapon or 1 armor to loot, (never two)
+        System.out.print("You have looted: { ");
+        if (Math.random()*2 < 1) { //1 in 2 chance
+            if (weaponOptions.size() != 0) {
+
+                weaponChoice = weaponOptions.get(0);
+                for(Weapon weapon: weaponOptions) {
+                    System.out.println(weapon.name);
+                    if (weapon.lootTier > weaponChoice.lootTier) {
+                        weaponChoice = weapon;
+                    } else if (weapon.lootRarity > weaponChoice.lootRarity) {
+                        weaponChoice = weapon;
+                    }
+                }
+                System.out.print(weaponChoice.name);
+
+            } else {
+                System.out.print("Nothing :(");
+            }
+        } else {
+            if (armorOptions.size() != 0) {
+
+                armorChoice = armorOptions.get(0);
+                for(Armor armor: armorOptions) {
+                    if (armor.lootTier > armorChoice.lootTier) {
+                        armorChoice = armor;
+                    } else if (armor.lootRarity > armorChoice.lootRarity) {
+                        armorChoice = armor;
+                    }
+                }
+                System.out.print(armorChoice.name);
+
+            } else {
+                if (weaponOptions.size() != 0) {
+
+                    weaponChoice = weaponOptions.get(0);
+                    for(Weapon weapon: weaponOptions) {
+                        System.out.println(weapon.name);
+                        if (weapon.lootTier > weaponChoice.lootTier) {
+                            weaponChoice = weapon;
+                        } else if (weapon.lootRarity > weaponChoice.lootRarity) {
+                            weaponChoice = weapon;
+                        }
+                    }
+                    System.out.print(weaponChoice.name);
+
+                } else {
+                    System.out.print("Nothing :(");
+                }
+            }
+        }
+        System.out.println(" }");
+        blank(2);
+
+        if (armorChoice != null || weaponChoice != null) {
+            boolean repeat = true;
+            while (repeat) {
+                System.out.println("Do you want to pick it up?");
+                System.out.println("y/n");
+
+                String input = keyboard.nextLine();
+                if (input.equalsIgnoreCase("y")) {
+                    blank(2);
+                    if (weaponChoice != null) {
+                        Player.weapons.add(weaponChoice);
+                        repeat = false;
+                        System.out.print("You chose to pick up " + weaponChoice.name);
+                    } else {
+                        Player.armors.add(armorChoice);
+                        repeat = false;
+                        System.out.println("You chose to pick up " + armorChoice.name);
+                    }
+                } else if (input.equalsIgnoreCase("n")) {
+                    System.out.println("You chose to not pick up the item");
+                } else {
+                    System.out.println("Please input y or n ");
+                    System.out.println();
+                }
+            }
+        }
+
+        blank(4);
     }
 
     public static void endGame(int endingType) throws FileNotFoundException {
@@ -451,7 +578,7 @@ public class MainClass {
 
         //Civilian Buildings: (max loot tier[3], max loot amount[7])
         //Special civilian buildings
-        Building houseSpawn = new Building("Your home", "spawn", 0, -1); //-1 means everything that can spawn, spawns
+        Building houseSpawn = new Building("Your home", "spawn", 10, 1);
 
         //Low-tier civilian buildings
         Building houseS1 = new Building("Run down one story house", "civil", 0, 1);
@@ -557,7 +684,7 @@ public class MainClass {
         Location swMilitary = new Location("SW military", "military", 15, new Building[]{militaryBarracksL, militaryTentL, militaryTentS, militaryTentL});
         Location eMilitary = new Location("E military", "military", 18, new Building[]{militaryHeadquarters, militaryTentL, militaryBarracksS, militaryTentS, militaryTentS});
         Location airfieldN = new Location("Airfield (N)", "military", 20, new Building[]{militaryArmory, militaryBarracksL, militaryBarracksS, militaryTentS, militaryTentS});
-        Location airfieldS = new Location("Airfield (S)", "military", 20, new Building[]{militaryBunker, militaryHeadquarters, militaryBarracksL, militaryTentL, militaryTentS});
+        Location airfieldS = new Location("Airfield (S)", "military", 20, new Building[]{militaryTentS, militaryHeadquarters, militaryBarracksL, militaryTentL, militaryTentS, militaryBunker});
 
         //Quests
         //Main quest line
@@ -625,8 +752,19 @@ public class MainClass {
         Location currentLocation;
         currentLocation = map[Player.playerY][Player.playerX];
         boolean usedInput = false; //if player uses a command that takes a turn this changes to true
+        boolean winCheck = false;
 
         while (true) {  //game loop
+
+            if (winCheck) {
+                if (Player.hasKey) {
+                    System.out.println("win condition met");
+                }
+                if (Player.playerBuildingIndex == 5) {
+                    System.out.println("win building");
+                }
+                System.out.println("win location");
+            }
 
             if (usedInput) { //decides if Npcs should move or not
                 currentLocation.moveNpcs(currentLocation);
@@ -642,14 +780,14 @@ public class MainClass {
             blank(2);
 
 
-
             if (generalInput.equals("help")) { //takes you to the help menu which explains and lists all commands
                 help();
 
             } else if (generalInput.contains("travel")) { //changes the location of the player one unit in one direction,(might cost energy and/or take time)
-                if (Player.playerBuildingIndex == currentLocation.buildings.length-1 || currentLocation.buildings.length == 0){
+                if (Player.playerBuildingIndex == currentLocation.buildings.length - 1 || currentLocation.buildings.length == 0) {
                     if (Player.travel(generalInput)) {
                         System.out.println("You have entered " + map[Player.playerY][Player.playerX].name);
+                        winCheck = Player.playerY == 3 && Player.playerX == 1;
                         currentLocation = map[Player.playerY][Player.playerX];
                         currentLocation.checkedBuildings.clear();
                         Player.playerBuildingIndex = 0;
@@ -687,12 +825,18 @@ public class MainClass {
                 System.out.println("check");
 
             } else if (generalInput.contains("shoot")) {
-                if(Player.shoot(generalInput, currentLocation)) {
+                if (Player.shoot(generalInput, currentLocation)) {
                     usedInput = true;
                 }
 
             } else if (generalInput.equals("quests")) {
                 printQuests();
+
+            } else if (generalInput.equals("inv")) {
+                Player.invCheck();
+
+            } else if (generalInput.contains("equip")) {
+               Player.equip(generalInput);
 
             } else if (generalInput.equals("loot")) {
                 lootCheck(currentLocation, Player.playerBuildingIndex);
