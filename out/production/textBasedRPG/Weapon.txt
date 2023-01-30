@@ -12,6 +12,7 @@ double barrel break action shotgun, civil, 1, 0.12, 60, 2, 1, 0.6, 0.4, 3
 pump action shotgun, military, 1, 0.15, 60, 1, 1, 0.7, 0.4, 0
 fully automatic shotgun, military, 2,0.25, 60, 2, 1, 0.6, 0.3, 0
 BB gun, civil, 2, 0.5, 1, 3, 10, 0.3, 0.1, 1
+Your gun, spawn, 0, 1, 15, 1, 3, 0.6, 0.3, 1
 mp38 submachine gun, civil + military, 1, 0.15, 16, 6, 2, 0.4, 0.35, 1
 PP-19 Bizon submachine gun, military, 1, 0.2, 12, 15, 2, 0.333, 0.3, 2
 Thompson submachine gun, civil, 2, 0.1, 15, 10, 2, 0.4, 0.4, 2
