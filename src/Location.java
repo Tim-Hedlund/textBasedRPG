@@ -1,11 +1,13 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Location {
     String name;
     String type;
     int encounterChance;
     Building[] buildings;
+    boolean[] lootedBuildings;
     ArrayList<Npc> npcs = new ArrayList<>();
     ArrayList<Integer> checkedBuildings = new ArrayList<>();
     public Location(String name, String type, int encounterChance, Building[] buildings) {
@@ -13,6 +15,8 @@ public class Location {
         this.type = type;
         this.encounterChance = encounterChance;
         this.buildings = new Building[buildings.length];
+        this.lootedBuildings = new boolean[buildings.length];
+        Arrays.fill(lootedBuildings, false);
         System.arraycopy(buildings, 0, this.buildings, 0, buildings.length);
     }
 
@@ -22,7 +26,6 @@ public class Location {
         for (int i = 2; i < this.buildings.length; i++) {
             if (this.encounterChance >= Math.floor(Math.random()*randMax)){ //(encounterChance/randMax % chance of generating enemy)
                 this.npcs.add(new Npc(this.type, i));
-
             }
         }
     }
@@ -128,11 +131,11 @@ public class Location {
             }
         }
     }
-    public void takeDamage(int targetBuildingIndex, Weapon currentWeapon, double hitChance, double damageMultiplier) throws FileNotFoundException {
+    public void takeDamage(int targetBuildingIndex, Weapon currentWeapon, double hitChance, double damageMultiplier, Location currentLocation) throws FileNotFoundException {
         for (Npc npc: this.npcs) {
             if (targetBuildingIndex == npc.buildingIndex) {
-                npc.takeDamage(currentWeapon, hitChance, damageMultiplier);
-                break;
+                npc.takeDamage(currentWeapon, hitChance, damageMultiplier, currentLocation);
+                MainClass.blank(2);
             }
         }
     }

@@ -394,7 +394,7 @@ public class MainClass {
         if (currentLocation.buildings.length != 0) {
             boolean hasNpc = false;
             for (Npc npc: currentLocation.npcs) {
-                if (npc.buildingIndex == playerBuildingIndex && !npc.alive && !currentLocation.buildings[playerBuildingIndex].looted) {
+                if (npc.buildingIndex == playerBuildingIndex && !npc.alive && !currentLocation.lootedBuildings[playerBuildingIndex]) {
                     if (nonSpecialLootTypes.contains(currentLocation.buildings[playerBuildingIndex].lootType)){
                         getLoot(currentLocation, playerBuildingIndex, 1, true);
                         hasNpc = true;
@@ -403,22 +403,22 @@ public class MainClass {
                     }
                 }
             }
-            if (!hasNpc && !currentLocation.buildings[playerBuildingIndex].looted) {
+            if (!hasNpc && !currentLocation.lootedBuildings[playerBuildingIndex]) {
                 getLoot(currentLocation, playerBuildingIndex, 1.5, false); //3x lower chance if there isn't a corpse on looted index
-                currentLocation.buildings[playerBuildingIndex].looted = true;
+                currentLocation.lootedBuildings[playerBuildingIndex] = true;
             }
         }
     }
 
-    private static void getLoot(Location currentLocation, int lootBuildingIndex, double rngModifier, boolean fromPlayer) {
+    private static void getLoot(Location currentLocation, int lootBuildingIndex, double rngModifier, boolean fromBody) {
         System.out.println("IM ALIVE");
         ArrayList<Weapon> weaponOptions = new ArrayList<>();
         ArrayList<Armor> armorOptions = new ArrayList<>();
-        System.out.println(fromPlayer);
+        System.out.println(fromBody);
 
-        if (fromPlayer) {
+        if (fromBody) {
             for(Weapon weapon: weapons) {
-                if ((weapon.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier)) { // && (weapon.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType)
+                if ((weapon.lootTier <= currentLocation.buildings[lootBuildingIndex].lootTier) && (!weapon.lootType.contains("spawn"))) { // && (weapon.lootType.contains(currentLocation.buildings[lootBuildingIndex].lootType)
                     weaponOptions.add(weapon);
                 }
             }
@@ -465,9 +465,6 @@ public class MainClass {
             }
         }
 
-        //weaponOptions.removeIf(weapon -> weapon.lootRarity < Math.random() * rngModifier);
-        //armorOptions.removeIf(armor -> armor.lootRarity < Math.random() * rngModifier);
-
         Weapon weaponChoice = null;
         Armor armorChoice = null;
 
@@ -480,14 +477,6 @@ public class MainClass {
             if (weaponOptions.size() != 0) {
 
                 weaponChoice = weaponOptions.get(0);
-                for(Weapon weapon: weaponOptions) {
-                    System.out.println(weapon.name);
-                    if (weapon.lootTier > weaponChoice.lootTier) {
-                        weaponChoice = weapon;
-                    } else if (weapon.lootRarity > weaponChoice.lootRarity) {
-                        weaponChoice = weapon;
-                    }
-                }
                 System.out.print(weaponChoice.name);
 
             } else {
@@ -510,14 +499,6 @@ public class MainClass {
                 if (weaponOptions.size() != 0) {
 
                     weaponChoice = weaponOptions.get(0);
-                    for(Weapon weapon: weaponOptions) {
-                        System.out.println(weapon.name);
-                        if (weapon.lootTier > weaponChoice.lootTier) {
-                            weaponChoice = weapon;
-                        } else if (weapon.lootRarity > weaponChoice.lootRarity) {
-                            weaponChoice = weapon;
-                        }
-                    }
                     System.out.print(weaponChoice.name);
 
                 } else {
@@ -558,13 +539,122 @@ public class MainClass {
         blank(4);
     }
 
-    public static void endGame(int endingType) throws FileNotFoundException {
-        if (endingType == 1) {
+    public static void endGame(int endingType, Location currentLocation) throws FileNotFoundException {
+        if (endingType == 1) { //death
             printFromTxt(printFile, 0, true);
             System.out.println();
             System.out.println("-= You died =-");
+            currentLocation.showBuildings();
+            System.exit(0);
+        } else if (endingType == 2) { //win
+            winMessage();
             System.exit(0);
         }
+    }
+
+    private static void winMessage() throws FileNotFoundException {
+        blank(200);
+        File textFile = printFile;
+
+        printFromTxt(textFile, 8, true);
+        printFromTxt(artFile, 19, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        for (int i = 9; i < 16; i++) {
+            printFromTxt(textFile, i, true);
+            System.out.print("press enter to continue");
+            keyboard.nextLine();
+            blank(200);
+        }
+        printFromTxt(textFile, 16, true);
+        System.out.println("yes or no");
+        String input = keyboard.nextLine();
+        blank(200);
+
+        while (true) {
+            if (input.equalsIgnoreCase("yes")) {
+                System.out.println("You chose to press the button");
+                blank(2);
+                for (int i = 18; i < 20; i++) {
+                    printFromTxt(textFile, i, true);
+                    System.out.print("press enter to continue");
+                    keyboard.nextLine();
+                    blank(200);
+                }
+                break;
+            } else if (input.equalsIgnoreCase("no")){
+                System.out.println("You chose to not press the button");
+                blank(2);
+                for (int i = 20; i < 45; i++) {
+                    printFromTxt(textFile, i, true);
+                    System.out.print("press enter to continue");
+                    keyboard.nextLine();
+                    blank(200);
+                }
+                break;
+            } else {
+                System.out.print("Please input either yes or no: ");
+                input = keyboard.nextLine();
+                blank(200);
+            }
+        }
+        printFromTxt(artFile, 10, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        printFromTxt(artFile, 13, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        printFromTxt(textFile, 45, true);
+    }
+
+    private static void playIntro() throws FileNotFoundException {
+        blank(200);
+        File textFile = printFile;
+
+        System.out.println(" - backstory - ");
+        blank(2);
+        printFromTxt(textFile, 3, true);
+        printFromTxt(artFile, 16, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        printFromTxt(artFile, 14, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        printFromTxt(textFile, 4, true);
+        printFromTxt(artFile, 15, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        printFromTxt(artFile, 15, true);
+        printFromTxt(textFile, 5, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        printFromTxt(artFile, 14, true);
+        printFromTxt(textFile, 6, true);
+        System.out.print("press enter to continue");
+        keyboard.nextLine();
+        blank(200);
+
+        printFromTxt(artFile, 17, true);
+        printFromTxt(textFile, 7, true);
+        System.out.print("press enter to start the game");
+        keyboard.nextLine();
+        blank(1000);
+
+        printFromTxt(textFile, 0, true);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -695,7 +785,6 @@ public class MainClass {
         Quest sideQuest2 = new Quest("Other side Quest Test", berezino, 0, eMilitary,2 , "main", true, null);
 
         createItems();
-        Player.weapons.add(weapons.get(15));
 
         activeQuests.add(mainQuest);
         inactiveQuests.add(sideQuest1);
@@ -719,13 +808,13 @@ public class MainClass {
         shownLocationsMap[Player.playerY][Player.playerX] = true;
 
         printFromTxt(printFile, 0, false);
-        System.out.println("Welcome to Z-rpg, an RPG Survival game set in a Zombie apocalypse");
+        System.out.println("Welcome to Revenge on Russia, a game about just that");
         System.out.print("To continue to character creation press Enter: ");
 
-        keyboard.nextLine();
-        blank(25);
-
         String skipCharacterCreator = keyboard.nextLine();
+        blank(200);
+
+
 
         if (skipCharacterCreator.equals("12")) {
             Player.name = "devMode";
@@ -740,30 +829,27 @@ public class MainClass {
         } else {
             Player.createCharacter();
         }
-        Player.currentHealth = 25 + Player.health*5;
+        Player.currentHealth = 30 + Player.health*7;
         Player.maxHealth = Player.currentHealth;
 
-        blank(100);
+        blank(200);
         printFromTxt(printFile, 0, false);
-        System.out.println("--<{ Now the real game begins }>--");
+        playIntro();
         System.out.println("Use \"help\" for help with commands");
 
         String generalInput;
         Location currentLocation;
         currentLocation = map[Player.playerY][Player.playerX];
+        currentLocation.showBuildings();
         boolean usedInput = false; //if player uses a command that takes a turn this changes to true
         boolean winCheck = false;
 
         while (true) {  //game loop
 
             if (winCheck) {
-                if (Player.hasKey) {
-                    System.out.println("win condition met");
-                }
                 if (Player.playerBuildingIndex == 5) {
-                    System.out.println("win building");
+                    endGame(2, currentLocation);
                 }
-                System.out.println("win location");
             }
 
             if (usedInput) { //decides if Npcs should move or not
@@ -775,7 +861,7 @@ public class MainClass {
             System.out.println();   //Takes input for each iteration of the game loop
             System.out.print("Input: ");
             generalInput = keyboard.nextLine().toLowerCase();
-            blank(100);
+            blank(50);
             System.out.println("Input: [" + generalInput + "]");
             blank(2);
 
@@ -793,7 +879,6 @@ public class MainClass {
                         Player.playerBuildingIndex = 0;
                         currentLocation.generateEncounters();
                         exploreMap(1, shownLocationsMap);
-                        usedInput = true;
                     }
 
                 } else {
@@ -821,16 +906,10 @@ public class MainClass {
                 Player.move(generalInput, currentLocation);
                 usedInput = true;
 
-            } else if (generalInput.equals("check")) {
-                System.out.println("check");
-
             } else if (generalInput.contains("shoot")) {
                 if (Player.shoot(generalInput, currentLocation)) {
                     usedInput = true;
                 }
-
-            } else if (generalInput.equals("quests")) {
-                printQuests();
 
             } else if (generalInput.equals("inv")) {
                 Player.invCheck();

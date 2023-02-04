@@ -15,7 +15,6 @@ public class Player {
     static String name;
     //name
 
-    static boolean hasKey = false;
 
     static int strength;
     static int stealth;
@@ -329,7 +328,7 @@ public class Player {
                 }
                 hitChance = currentWeapon.accuracy;
             }
-            currentLocation.takeDamage(targetBuildingIndex, currentWeapon, hitChance, damageMultiplier);
+            currentLocation.takeDamage(targetBuildingIndex, currentWeapon, hitChance, damageMultiplier, currentLocation);
             currentWeapon.setWeaponCD();
         }
         return !loop;
@@ -347,7 +346,8 @@ public class Player {
         }
     }
 
-    public static boolean takeDamage(int targetBuildingIndex, Weapon npcWeapon, int npcIndex) throws FileNotFoundException {
+    public static boolean takeDamage(int targetBuildingIndex, Weapon npcWeapon, int npcIndex, Location currentLocation) throws FileNotFoundException {
+        double difficultyMultiplier = 0.1;
 
         if (targetBuildingIndex == Player.playerBuildingIndex) {
             double hitChance = Math.pow(npcWeapon.accuracy, 0.5 * Math.abs(Player.playerBuildingIndex-npcIndex));
@@ -365,7 +365,7 @@ public class Player {
                     if (randNum == 0) { //headshot
                         hitLocation = 1;
                         damageMultiplier = 2.5;
-                    } else if (randNum == 1) { //legshot
+                    } else if (randNum == 1) { //leg shot
                         hitLocation = 2;
                         damageMultiplier = 0.25;
                     } else { //body shot
@@ -385,12 +385,12 @@ public class Player {
                     }
 
                     if (damage > 0) {
-                        currentHealth -= (int)damage;
+                        currentHealth -= (int)(damage*difficultyMultiplier);
                     }
                     System.out.println("You got hit: " + damage);
                     System.out.println();
                     System.out.println("[" + currentHealth + "/" +  maxHealth + "]");
-                    healthCheck();
+                    healthCheck(currentLocation);
                 }
             }
             return true;
@@ -398,9 +398,9 @@ public class Player {
         return false;
     }
 
-    private static void healthCheck() throws FileNotFoundException {
+    private static void healthCheck(Location currentLocation) throws FileNotFoundException {
         if (currentHealth < 0) {
-            MainClass.endGame(1);
+            MainClass.endGame(1, currentLocation);
         } else {
             currentHealth += maxHealth/10;
         }
@@ -411,18 +411,18 @@ public class Player {
     }
 
     public static void invCheck() throws FileNotFoundException {
-        File artfile = new File("src\\Art.txt");
+        File artFile = new File("src\\Art.txt");
         if (currentArmor[1] != null) {
-            MainClass.printFromTxt(artfile, 3, false);
+            MainClass.printFromTxt(artFile, 3, false);
         } else {
-            MainClass.printFromTxt(artfile, 4, false);
+            MainClass.printFromTxt(artFile, 4, false);
         }
         if (currentArmor[0] != null) {
-            MainClass.printFromTxt(artfile, 5, false);
+            MainClass.printFromTxt(artFile, 5, false);
         } else {
-            MainClass.printFromTxt(artfile, 6, false);
+            MainClass.printFromTxt(artFile, 6, false);
         }
-        MainClass.printFromTxt(artfile, 7, false);
+        MainClass.printFromTxt(artFile, 7, false);
         blank(2);
 
         System.out.println("--= inventory =--");
@@ -436,6 +436,9 @@ public class Player {
         for (Weapon weapon: weapons) {
             System.out.println(weapon.name + " -- damage: " +  weapon.damage + ", rpm: " + weapon.rpm + ", cd: " + weapon.currentCD);
         }
+        System.out.println();
+        System.out.println(" - Health - ");
+        System.out.println("[" + currentHealth + "/" +  maxHealth + "]");
         blank(2);
     }
 

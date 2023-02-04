@@ -69,13 +69,13 @@ public class Npc {
 
         if (aggressive) {
             if (Math.abs(distanceToTarget) == this.weapon.range) { //If player is at perfect range from npc
-                if (!this.shoot(this.targetLocation)) { //If it shoots at nothing it is no longer aggressive
+                if (!this.shoot(this.targetLocation, currentLocation)) { //If it shoots at nothing it is no longer aggressive
                     aggressive = false;
                 }
 
             } else if (Math.abs(distanceToTarget) < this.weapon.range) { // if player is too close to npc
                 if ((int)Math.floor(Math.random()*2) == 0) { //1/2 chance of shooting or running away from player
-                    if (!this.shoot(this.targetLocation)) { //If it shoots at nothing it is no longer aggressive
+                    if (!this.shoot(this.targetLocation, currentLocation)) { //If it shoots at nothing it is no longer aggressive
                         aggressive = false;
                     }
 
@@ -83,7 +83,7 @@ public class Npc {
                     if(this.buildingIndex ++ < currentLocation.buildings.length) {
                         this.move(false, distanceToTarget);
                     } else {
-                        this.shoot(this.targetLocation);
+                        this.shoot(this.targetLocation, currentLocation);
                     }
                 }
             } else {
@@ -111,12 +111,12 @@ public class Npc {
         }
     }
 
-    private boolean shoot(int targetIndex) throws FileNotFoundException {
+    private boolean shoot(int targetIndex, Location currentLocation) throws FileNotFoundException {
         System.out.println(this.buildingIndex + "shoots");
-        return Player.takeDamage(targetIndex, this.weapon, this.buildingIndex);
+        return Player.takeDamage(targetIndex, this.weapon, this.buildingIndex, currentLocation);
     }
 
-    public void takeDamage(Weapon currentWeapon, double hitChance, double meleeDamageMultiplier) throws FileNotFoundException {
+    public void takeDamage(Weapon currentWeapon, double hitChance, double meleeDamageMultiplier, Location currentlocation) throws FileNotFoundException {
 
         int hitLocation;
         ArrayList<Integer> hitLocations = new ArrayList<>();
@@ -173,13 +173,14 @@ public class Npc {
         } else {
             System.out.println("[0/" + this.maxHealth + "]");
         }
-        this.healthCheck();
+        this.healthCheck(currentlocation);
     }
 
-    private void healthCheck() {
+    private void healthCheck(Location currentLocation) {
         if (this.health <= 0) {
             System.out.println(this.name + "is dead");
             this.alive = false;
+            currentLocation.lootedBuildings[this.buildingIndex] = false;
         }
     }
 }

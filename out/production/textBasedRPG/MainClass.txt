@@ -1,11 +1,28 @@
-====================================================
- __________         _____________________ ________
- \____    /         \______   \______   \/  _____/
-   /     /   ______  |       _/|     ___/   \  ___
-  /     /_  /_____/  |    |   \|    |   \    \_\  \
- /_______ \          |____|_  /|____|    \______  /
-         \/                 \/                  \/
-====================================================
+===============================================================================================================================================================
+                         _____                           _____                                                 _____
+___________         _____\    \ _______    ______   _____\    \  _____    _____            _____          _____\    \               ____    _____    _____
+\          \       /    / |    |\      |  |      | /    / |    ||\    \   \    \      _____\    \_       /    / |    |          ____\_  \__|\    \   \    \
+ \    /\    \     /    /  /___/| |     /  /     /|/    /  /___/| \\    \   |    |    /     /|     |     /    /  /___/|         /     /     \\\    \   |    |
+  |   \_\    |   |    |__ |___|/ |\    \  \    |/|    |__ |___|/  \\    \  |    |   /     / /____/|    |    |__ |___|/        /     /\      |\\    \  |    |
+  |      ___/    |       \       \ \    \ |    | |       \         \|    \ |    |  |     | |_____|/    |       \             |     |  |     | \|    \ |    |
+  |      \  ____ |     __/ __     \|     \|    | |     __/ __       |     \|    |  |     | |_________  |     __/ __          |     |  |     |  |     \|    |
+ /     /\ \/    \|\    \  /  \     |\         /| |\    \  /  \     /     /\      \ |\     \|\        \ |\    \  /  \         |     | /     /| /     /\      \
+/_____/ |\______|| \____\/    |    | \_______/ | | \____\/    |   /_____/ /______/|| \_____\|    |\__/|| \____\/    |        |\     \_____/ |/_____/ /______/|
+|     | | |     || |    |____/|     \ |     | /  | |    |____/|  |      | |     | || |     /____/| | ||| |    |____/|        | \_____\   | /|      | |     | |
+|_____|/ \|_____| \|____|   | |      \|_____|/    \|____|   | |  |______|/|_____|/  \|_____|     |\|_|/ \|____|   | |         \ |    |___|/ |______|/|_____|/
+                        |___|/                          |___|/                             |____/             |___|/           \|____|
+                            ___________    ______   _____                _____             _____    ____________      _____
+                            \          \   \     \  \    \          _____\    \       _____\    \  /            \   /      |_
+                             \    /\    \   \    |  |    |         /    / \    |     /    / \    ||\___/\  \\___/| /         \
+                              |   \_\    |   |   |  |    |        |    |  /___/|    |    |  /___/| \|____\  \___|/|     /\    \
+                              |      ___/    |    \_/   /|     ____\    \ |   || ____\    \ |   ||       |  |     |    |  |    \
+                              |      \  ____ |\         \|    /    /\    \|___|//    /\    \|___|/  __  /   / __  |     \/      \
+                             /     /\ \/    \| \         \__ |    |/ \    \    |    |/ \    \      /  \/   /_/  | |\      /\     \
+                            /_____/ |\______| \ \_____/\    \|\____\ /____/|   |\____\ /____/|    |____________/| | \_____\ \_____\
+                            |     | | |     |  \ |    |/___/|| |   ||    | |   | |   ||    | |    |           | / | |     | |     |
+                            |_____|/ \|_____|   \|____|   | | \|___||____|/     \|___||____|/     |___________|/   \|_____|\|_____|
+                                                      |___|/
+===============================================================================================================================================================
 
 ============================================================
 ||               Welcome to the help window               ||
@@ -24,13 +41,128 @@
 ||  Exit               - exits the game                   ||
 ============================================================
 
-==============================================================
-||                      Shoot command                       ||
-==============================================================
-||                         Commands                         ||
-||----------------------------------------------------------||
-||  Move + (left, right)  - moves player in target direction||
-||  Stats                 - displays player and enemy stats ||
-||  Shoot + weapon        - shoot desired gun at enemy      ||
-||  Cover                 - increase dodge chance           ||
-||                                                          ||
+You enter the bunker,
+
+Ah im so tired,
+a full day of cleaning in the Russian Kremlin really does make you tired...
+
+You go sit down to watch TV and relax for the night when you realise that Putin is on
+every channel you could find, Confused you sit down to listen to what he has to say.
+
+*Static*
+(Putins voice) There is a dangerous man walking our streets...
+He has committed unthinkable things to our country, and his actions will not go unpunished in OUR great country
+The person who brings me his body will get rewarded generously.
+*Static*
+                - 100 rubles (15kr) -
+This criminal lives somewhere in the Chernarus area,
+GO GET HIM
+*Static*
+
+OH NO, I must have forgotten to fold Putin's socks into bunnies like he loves...
+What will I do to get out of this situation???
+
+AHA, I will send a NUKE to BLOW UP all of Russia
+          THERE WILL BE NOTHING LEFT
+
+You see the bunker in front of you and open the door using your full clearance janitor card.
+
+Surprisingly there are no guards inside the first room, you make your way into elevator that slowly takes you down to the deepest floor
+
+When the doors open you are greeted by a empty room with one big red button (and a slippery banana peal right next to it),
+there it is...
+you think to yourself as you approach the button
+
+Feeling the power at the tip of your finger scares you and the thought of pressing it becomes unclear
+
+You realise that you have your family, friends and everyone you have ever loved at the mercy of your finger
+Why did I even come here
+you think to yourself
+
+How could anybody in the right mind come to this as the conclusion
+This can't be the right choice, killing your nation for revenge for something that has yet to happen
+
+*you sit down*
+I'm still alive, even though they tried their hardest to end me, I would never forgive myself if I pressed the button.
+I am stronger than anybody out there, and i proved it today, why would i show weakness by using such a cheap trick.
+I would be putting everyone in the grave, but for what, who would know my story if there was nobody left
+
+*You came to the conclusion that there was no way a sane person would ever press such a button*
+*standing up*
+I'm sane, so I shouldn't press the button, right?
+
+DO YOU PRESS THE BUTTON?
+
+"IM SANE", WHAT A JOKE
+IM HERE NOW TO END WHAT I STARTED
+I DONT CARE FOR SOME PETTY SACRIFICES...
+FAMILY, FRIENDS, LOVE INTERESTS
+
+THEY CAN ALL DIE
+AND THEY WILL DIE TODAY
+
+*you press the button with intent to kill*
+
+I am indeed sane, there is no reason to press a button like that.
+I will change the world for the better, but first you have to become better yourself.
+
+I will become the best version of myself,
+become president,
+change the nation
+
+and in the end, I will change the world into a place that people today could never even dream of
+
+I will...
+*you take a step forward only to realise that there was an inconveniently placed banana peal on the floor*
+
+*you slip*
+
+*your head makes its way towards the ground*
+
+this is the end
+
+this is how i die
+
+no bullet could kill me
+
+but a slippery banana peal
+
+this is how i go huh
+
+how unfortunate
+
+wait...
+
+wait
+
+but NO
+
+I cant die like this
+
+I HAVE A WORLD TO SAVE
+
+*you make a last ditch effort to save yourself from impending doom*
+
+*at the last second, your face millimeters of the ground, you catch yourself*
+
+*you stand up taking your hand of the button that saved your life*
+
+wait
+
+the button
+
+*you realise that you pressed the button when you caught yourself*
+
+HOW COULD THIS HAPPEN, NOOO NO no no...
+
+not like this
+
+ - THE END -
+
+
+
+
+
+
+
+
