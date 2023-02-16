@@ -24,22 +24,24 @@ ___________         _____\    \ _______    ______   _____\    \  _____    _____ 
                                                       |___|/
 ===============================================================================================================================================================
 
-============================================================
-||               Welcome to the help window               ||
-============================================================
-||                        Commands                        ||
-||--------------------------------------------------------||
-||  Help               - opens the help window            ||
-||  Move + (n,w,s,e)   - moves player in target direction ||
-||  Location           - displays location info           ||
-||  Stats              - displays player stats            ||
-||  Map                - displays map                     ||
-||  Check + (building) - checks the target building       ||
-||  Quest              - displays quests                  ||
-||                                                        ||
-||                                                        ||
-||  Exit               - exits the game                   ||
-============================================================
+================================================================
+||                 Welcome to the help window                 ||
+================================================================
+||                          Commands                          ||
+||------------------------------------------------------------||
+||  Help               - opens the help window                ||
+||  Travel + (n,w,s,e) - switch location in target direction  ||
+||  Location           - displays location info               ||
+||  Stats              - displays player stats                ||
+||  Inv                - displays player inv                  ||
+||  Map                - displays map                         ||
+||  Loot               - loots current building               ||
+||  Equip + (armor)    - equips target armor                  ||
+||  Shoot + (building) - shoots target building               ||
+||                                                            ||
+||                                                            ||
+||  Exit               - exits the game                       ||
+================================================================
 
 You enter the bunker,
 

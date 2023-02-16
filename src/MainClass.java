@@ -8,8 +8,8 @@ public class MainClass {
     public static ArrayList<Quest> activeQuests = new ArrayList<>();
     public static ArrayList<Weapon> weapons = new ArrayList<>();
     public static ArrayList<Armor> armor = new ArrayList<>();
-    static File printFile = new File("src\\MainClass.txt");
-    static File artFile = new File("src\\Art.txt");
+    static File printFile = new File("./MainClass.txt");
+    static File artFile = new File("./Art.txt");
 
     static void printFromTxt(File file, int paragraph, boolean ln) throws FileNotFoundException {
         Scanner scanFile = new Scanner(file);
@@ -217,7 +217,7 @@ public class MainClass {
     }
 
     static void createItems() throws FileNotFoundException {
-        Scanner fileReader = new Scanner(new File("src\\Weapon.txt")); //Weapon fileReader
+        Scanner fileReader = new Scanner(new File("./Weapon.txt")); //Weapon fileReader
         fileReader.nextLine();
         fileReader.nextLine(); //skip first two lines
 
@@ -225,7 +225,7 @@ public class MainClass {
             weapons.add(new Weapon(fileReader.nextLine()));
         }
 
-        fileReader = new Scanner(new File("src\\Armor.txt")); //Armor fileReader
+        fileReader = new Scanner(new File("./Armor.txt")); //Armor fileReader
         fileReader.nextLine();
         fileReader.nextLine(); //skip first two lines
 
@@ -658,6 +658,7 @@ public class MainClass {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
+        blank(1000);
 
         //Buildings
         //Special Buildings (max loot tier[1], max loot amount[1])

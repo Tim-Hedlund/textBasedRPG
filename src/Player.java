@@ -38,7 +38,7 @@ public class Player {
     static int playerBuildingIndex = 2;
 
 
-    static File printFile = new File("src\\Player.txt");
+    static File printFile = new File("./Player.txt");
 
     static int intTest(String input){
 
@@ -411,7 +411,7 @@ public class Player {
     }
 
     public static void invCheck() throws FileNotFoundException {
-        File artFile = new File("src\\Art.txt");
+        File artFile = new File("./Art.txt");
         if (currentArmor[1] != null) {
             MainClass.printFromTxt(artFile, 3, false);
         } else {

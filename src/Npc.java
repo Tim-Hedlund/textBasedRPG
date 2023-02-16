@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Npc {
-    File text = new File("src\\Player.txt");
+    File text = new File("./Player.txt");
     String name;
     int buildingIndex;
     int strength;

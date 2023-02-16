@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Weapon {
 
-    File file = new File ("src\\Weapon.txt");
+    File file = new File ("./Weapon.txt");
     String name;        //name of the weapon
     ArrayList<String> lootType = new ArrayList<>();  //Loot type of weapon, aka which buildings it spawns in
     int lootTier;       //Tier of loot it spawns at and above
